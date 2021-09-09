@@ -5,7 +5,7 @@
 #define MAX(A, B) ((A) > (B)) ? (A) : (B)
 #define MIN(A, B) ((A) < (B)) ? (A) : (B)
 
-void conversion_error(const char * const line) {
+static void conversion_error(const char * const line) {
     fprintf(
         stderr,
         "failed to convert '%s' to a number, ignoring future warnings.\n",
@@ -18,8 +18,8 @@ int main(void) {
     size_t zero = 0;
     size_t lines = 0;
     double sum = 0.0;
-    double max;
-    double min;
+    double max = 0.0;
+    double min = 0.0;
     int first_time = 1;
     int first_conversion_warning = 1;
     ssize_t nread = 0;
@@ -33,7 +33,7 @@ int main(void) {
             /* ignore non-numerical lines */
             if (first_conversion_warning) {
                 if (nread > 1) {
-                    line[nread - 1] = 0;
+                    line[nread - 1] = '\0';
                 }
                 conversion_error(line);
                 first_conversion_warning = 0;
